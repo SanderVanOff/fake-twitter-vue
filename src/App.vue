@@ -1,6 +1,6 @@
 <template>
   <div id="app container">
-    <component :is="layout">
+    <component :is="layout" class="container">
       <router-view/>
     </component>
   </div>
@@ -28,5 +28,8 @@ export default {
 #app {
   margin: 0 auto;
 }
+
+
+
 
 </style>
