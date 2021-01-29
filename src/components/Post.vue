@@ -4,10 +4,11 @@
             <img src="../assets/avatar.jpg" alt="" class="post-avatar__img">
         </div>
         <div class="post__main post-main">
-            <div class="post-main__user mb-2">
+            <div class="post-main__user mb-3">
                 <span class="post-main__username mr-3">Username</span>
                 <span class="post-main__nickname mr-3">@nickName</span>
                 <span class="post-main__date mr-3">28.01.2021</span>
+                <b-icon icon="x" class="post-delete"></b-icon>
             </div>
             <div class="post-main__text mb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id placeat obcaecati nisi accusamus, vitae esse!</div>
             <div class="post-main__image mb-2">
@@ -50,6 +51,9 @@ export default {
     display: flex;
     flex-direction: column;
 }
+.post-main__user {
+    position: relative;
+}
 .post-main__username {
     color: rgb(15, 20, 25);
     font-size: 15px;
@@ -63,6 +67,17 @@ export default {
     color: rgb(91, 112, 131);
     line-height: 1.3125;
     overflow-wrap: break-word;
+}
+.post-delete {
+    position: absolute;
+    right: 0;
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 9999px;
+    transition: 0.2s ease-in-out;
+}
+.post-delete:hover {
+    background-color: rgba(29, 161, 242, 0.1);
 }
 .post-main__text {
     color: rgb(15, 20, 25);

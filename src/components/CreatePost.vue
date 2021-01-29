@@ -8,7 +8,12 @@
           class="create-post__avatar-img"
         />
       </div>
-      <div class="create-post__text ml-3">Что происходит?</div>
+      <div class="create-post__text ml-3" 
+      contenteditable 
+      ref="inputField"
+      @input="addTextToData"
+      @keydown.once="clearPlaceholder"
+      >Что происходит?</div>
     </div>
     <div class="create-post__action">
       <div class="create-post__add">
@@ -18,19 +23,64 @@
           alt=""
         />
       </div>
-      <button class="create-post__create">Твитнуть</button>
+      <button 
+      class="create-post__create"
+      @click="createNewPost"
+      >Твитнуть</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data: ()=> (
+    {
+      post: {
+        text: '',
+        image: null
+      }
+    }
+  ),
+
+  methods: {
+    clearPlaceholder(){
+      this.$refs.inputField.textContent = ' '
+    },
+    addTextToData(){
+      this.post.text = this.$refs.inputField.innerHTML
+    },
+    createNewPost(){
+      if(this.post.text.length > 0) {
+
+        const option = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      };
+        const post = {
+          id: Date.now().toString(32),
+          username: 'username',
+          nickname: 'nickname',
+          userAvatar: '../assets/avatar.jpg',
+          text: this.post.text,
+          image: this.post.image,
+          postDate: new Date().toLocaleString("ru-RU", option),
+          likes: ['0']
+        }
+
+        console.log('post', post)
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
 .create-post__main {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 .create-post__avatar-img {
   height: 50px;
@@ -49,6 +99,7 @@ export default {};
   font-weight: 400;
   color: rgb(15, 20, 25);
   line-height: 1.3125;
+  width: 100%;
 }
 .create-post__action {
   display: flex;
