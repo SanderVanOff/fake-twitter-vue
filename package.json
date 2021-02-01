@@ -10,7 +10,11 @@
   "dependencies": {
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
+    "cookie": "^0.4.1",
     "core-js": "^3.6.5",
+    "firebase": "^8.2.5",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.12",
     "vue-router": "^3.2.0",

@@ -11,22 +11,25 @@
         <!--  -->
         <button class="nav__button twit-btn">Твитнуть</button>
       </ul>
-      
     </nav>
     <!--  -->
-      <div class="header__user user">
-        <img src="../assets/avatar.jpg" alt="" class="user__img">
-        <div class="user__info">
-          <p class="user__username">Username</p>
-          <p class="user__nickname">@nickName</p>
-        </div>
-        <b-icon icon="three-dots-vertical" class="user__options"></b-icon>
-
+    <div class="header__user user">
+      <img :src="currentUser.avatar" alt="" class="user__img" />
+      <div class="user__info">
+        <p class="user__username">{{ currentUser.username }}</p>
+        <p class="user__nickname">{{ currentUser.nickname }}</p>
       </div>
+      <b-icon 
+      icon="three-dots-vertical" 
+      class="user__options"
+      @click="logout"
+      ></b-icon>
+    </div>
   </header>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     links: [
@@ -59,7 +62,28 @@ export default {
         url: "/likes-post"
       }
     ]
-  })
+  }),
+  computed: {
+    ...mapGetters(["isCurrentUser", "isAuthenticated"]),
+    currentUser() {
+      if (this.isCurrentUser) {
+        return this.isCurrentUser;
+      } else {
+        const defaultUser = {
+          nickname: 'nickname',
+          username: 'username',
+          avatar: 'https://firebasestorage.googleapis.com/v0/b/fake-twitter-8319b.appspot.com/o/unnamed.jpg?alt=media&token=99a7c698-4599-45ec-89fa-b28e04d5be72'
+        }
+        return defaultUser
+      }
+    }
+  },
+  methods: {
+    async logout(){
+     await this.$store.dispatch('LOGOUT');
+     this.$router.push('/login')
+    }
+  }
 };
 </script>
 
@@ -158,5 +182,4 @@ export default {
   font-size: 15px;
   line-height: 1.3125;
 }
-
 </style>

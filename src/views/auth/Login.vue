@@ -24,7 +24,9 @@
         required
       />
     </div>
-    <button type="submit" class="btn form-btn">Войти</button>
+    <button type="submit" class="btn form-btn">
+      <span class="form-btn__text">Войти</span>
+      </button>
     <router-link to="/registration" class="form-link">
       Зарегистрироваться в Твиттере</router-link
     >
@@ -50,7 +52,7 @@ export default {
         password: this.controls.password
       };
 
-      await this.$store.dispatch("auth/LOGIN", user);
+      await this.$store.dispatch("LOGIN", user);
       this.controls.email = "";
       this.controls.password = "";
 
