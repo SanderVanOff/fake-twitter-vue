@@ -47,6 +47,8 @@ new Vue({
         if(user){
           this.$store.dispatch('AUTO_LOGIN')
           this.$store.dispatch('SET_USER', user.uid)
+        } else {
+          this.$router.push('/login')
         }
       })
     }
