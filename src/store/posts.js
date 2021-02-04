@@ -54,6 +54,8 @@ export default {
             .database()
             .ref(`posts/${post.id}`)
             .update({ image: imageSrc });
+
+            post.image = imageSrc;
         }
 
         commit("SET_POST_TO_STATE", post);
@@ -85,7 +87,7 @@ export default {
     async removePost({ commit, getters }, { id, image }) {
       commit("CLEAR_ERROR");
       commit("SET_LOADING", true);
-      console.log("image", image);
+      
       try {
         await firebase.database().ref(`posts/${id}`).remove();
 
@@ -107,14 +109,11 @@ export default {
     //лайк поста
     async LikesPost({ commit, getters }, { id, currentNicknameUser }) {
       const changePost = getters["ALL_POSTS"].find((post) => post.id === id);
-      console.log("currentNickname1", currentNicknameUser);
       if (changePost.likes.includes(currentNicknameUser)) {
         await commit("DELETE_LIKE_POST", { id, currentNicknameUser });
       } else {
         await commit("ADD_LIKE_POST", { id, currentNicknameUser });
       }
-
-      console.log("changePost.likes", changePost.likes);
       await firebase.database().ref(`posts/${id}/likes`).set(changePost.likes);
     }
   },

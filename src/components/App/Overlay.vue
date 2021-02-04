@@ -10,10 +10,10 @@
 
 <style scoped>
 .overlay {
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh;
+  width: 100vw; */
   background: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;

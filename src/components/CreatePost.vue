@@ -76,7 +76,6 @@ export default {
     },
     loadImage() {
       this.$refs.inputImgFile.click();
-      console.log("img", this.$refs.inputImgFile);
     },
     loadImageFile() {
       const urlImg = URL.createObjectURL(this.$refs.inputImgFile.files[0]);

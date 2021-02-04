@@ -2,7 +2,7 @@
   <div class="default-layout d-flex">
     <header-component></header-component>
     <router-view></router-view>
-    <overlay v-if="!isCurrentUser" />
+    <overlay v-if="LOADING || !isCurrentUser" />
   </div>
 </template>
 

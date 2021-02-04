@@ -12,13 +12,13 @@
     </div>
     <div class="main-form"></div>
     <div class="main-line"></div>
+    <transition-group name="list-item">
     <post
       v-for="post of getLikesPosts"
       :key="post.id"
       :postData="post"
-      @remove-post="removePost(index, post.id, post.image)"
-      @likes-post="likesPost(post.id)"
     ></post>
+    </transition-group>
   </main>
 </template>
 

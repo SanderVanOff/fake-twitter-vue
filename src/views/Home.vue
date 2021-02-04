@@ -13,8 +13,12 @@
     <div class="main-form">
       <create-post></create-post>
     </div>
-    <div class="main-line"></div>
-    <post v-for="post of ALL_POSTS" :key="post.id" :postData="post"></post>
+    <div class="main-line" v-if="isCurrentUser"></div>
+    <transition-group name="list-item">
+
+    <post v-for="post of ALL_POSTS" :key="post.id" :postData="post" ></post>
+
+    </transition-group>
   </main>
 </template>
 
@@ -34,15 +38,6 @@ export default {
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
   },
-  // methods: {
-  //   async removePost(index, id, image) {
-  //     await this.$store.dispatch("removePost", { index, id, image });
-  //   },
-  //   async likesPost(id) {
-  //     const currentNicknameUser = this.isCurrentUser.nickname;
-  //     await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
-  //   },
-  // },
 };
 </script>
 

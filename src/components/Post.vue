@@ -1,36 +1,43 @@
 <template>
   <div class="post">
-    <div class="post__avatar">
-      <img :src="postData.userAvatar" alt="" class="post-avatar__img" />
+    <div class="post-wrapper" v-if="isCurrentUser">
+      <div class="post__avatar">
+        <img :src="postData.userAvatar" alt="" class="post-avatar__img" />
+      </div>
+      <div class="post__main post-main">
+        <div class="post-main__user mb-3">
+          <span class="post-main__username mr-3">{{ postData.username }}</span>
+          <span class="post-main__nickname mr-3">{{ postData.nickname }}</span>
+          <span class="post-main__date mr-3">{{ postData.postDate }}</span>
+          <b-icon
+            icon="x"
+            class="post-delete"
+            @click="removePost(postData)"
+          ></b-icon>
+        </div>
+        <div class="post-main__text mb-3" v-html="postData.text"></div>
+        <div class="post-main__image mb-2">
+          <img :src="postData.image" alt="" class="post-main__img" style="width: 100%;
+  height: 100%;"/>
+        </div>
+        <div class="post-main__bottom">
+          <b-icon
+            :icon="likesPostCurrentUser ? 'heart-fill' : 'heart'"
+            :class="{ active: likesPostCurrentUser }"
+            class="post-main__like"
+            @click="likesPost(postData.id)"
+          ></b-icon>
+          <span class="post-main__like-count ml-2">{{
+            postData.likes.length - 1
+          }}</span>
+        </div>
+      </div>
     </div>
-    <div class="post__main post-main">
-      <div class="post-main__user mb-3">
-        <span class="post-main__username mr-3">{{ postData.username }}</span>
-        <span class="post-main__nickname mr-3">{{ postData.nickname }}</span>
-        <span class="post-main__date mr-3">{{ postData.postDate }}</span>
-        <b-icon
-          icon="x"
-          class="post-delete"
-          @click="removePost(postData.id, postData.image)"
-        ></b-icon>
-      </div>
-      <div class="post-main__text mb-3" v-html="postData.text"></div>
-      <div class="post-main__image mb-2">
-        <img :src="postData.image" alt="" class="post-main__img" />
-      </div>
-      <div class="post-main__bottom">
-        <b-icon
-          :icon="likesPostCurrentUser ? 'heart-fill' : 'heart'"
-          :class="{ active: likesPostCurrentUser }"
-          class="post-main__like"
-          @click="likesPost(postData.id)"
-        ></b-icon>
-        <span class="post-main__like-count ml-2">{{
-          postData.likes.length - 1
-        }}</span>
+    <div class="d-flex justify-content-center" v-else>
+      <div class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
-    {{postData.image}}
   </div>
 </template>
 
@@ -42,8 +49,8 @@ export default {
       type: Object,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
@@ -53,17 +60,17 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   },
   methods: {
-    async removePost(id, image) {
-      await this.$store.dispatch("removePost", { id, image });
+    async removePost(postData) {
+      await this.$store.dispatch("removePost", postData);
     },
     async likesPost(id) {
       const currentNicknameUser = this.isCurrentUser.nickname;
       await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
-    },
-  },
+    }
+  }
 };
 </script>
 

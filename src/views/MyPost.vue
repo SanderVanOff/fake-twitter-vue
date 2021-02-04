@@ -12,13 +12,14 @@
     </div>
     <div class="main-form"></div>
     <div class="main-line"></div>
-    <post
-      v-for="post of getMyPosts"
-      :key="post.id"
-      :postData="post"
-      @remove-post="removePost(index, post.id, post.image)"
-      @likes-post="likesPost(post.id)"
-    ></post>
+    <transition-group name="list-item">
+      <template v-if="getMyPosts.length">
+        <post v-for="post of getMyPosts" :key="post.id" :postData="post"></post>
+      </template>
+      <div v-else>
+        Постов пока нет
+      </div>
+    </transition-group>
   </main>
 </template>
 
@@ -31,17 +32,17 @@ import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
-    Post,
+    Post
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
     getMyPosts() {
-      const myPosts = this.ALL_POSTS.filter((item) => {
+      const myPosts = this.ALL_POSTS.filter(item => {
         return item.nickname === this.isCurrentUser.nickname;
       });
       return myPosts;
-    },
-  },
+    }
+  }
 };
 </script>
 
