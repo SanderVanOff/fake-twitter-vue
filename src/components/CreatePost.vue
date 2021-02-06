@@ -39,7 +39,7 @@
         @change="loadImageFile"
       />
       <button class="create-post__create" @click="createNewPost">
-        Твитнуть
+        Написать
       </button>
     </div>
   </div>

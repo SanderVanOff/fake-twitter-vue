@@ -8,7 +8,7 @@ import jwtDevode from "jwt-decode";
 export default {
   state: {
     token: null,
-    user: null,
+    user: null
   },
   mutations: {
     setToken(state, token) {
@@ -25,12 +25,12 @@ export default {
     },
     changeImage(state, image) {
       state.user.avatar = image;
-    },
+    }
   },
   actions: {
     //создание пользователя
     async createUser(
-      { commit },
+      { commit, dispatch },
       { nickname, password, email, username, avatar }
     ) {
       try {
@@ -38,15 +38,13 @@ export default {
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then((data) => {
-            firebase
-              .database()
-              .ref(`users/${data.user.uid}/info`)
-              .set({
-                username,
-                email,
-                nickname,
-                avatar,
-              });
+            firebase.database().ref(`users/${data.user.uid}/info`).set({
+              username,
+              email,
+              nickname,
+              avatar
+            });
+            dispatch("SET_TOKEN", data.user.uid);
           });
       } catch (error) {
         console.log(error);
@@ -64,7 +62,7 @@ export default {
         dispatch("SET_USER", data.user.uid);
         dispatch("SET_TOKEN", data.user.uid);
         commit("SET_LOADING", false);
-        commit("SET_MESSAGE", 'Вы успешно вошли');
+        commit("SET_MESSAGE", "Вы успешно вошли");
       } catch (error) {
         commit("SET_ERROR", error);
         throw error;
@@ -80,10 +78,7 @@ export default {
     //добавить пользователя
     async SET_USER({ commit }, id) {
       const user = (
-        await firebase
-          .database()
-          .ref(`users/${id}/info`)
-          .once("value")
+        await firebase.database().ref(`users/${id}/info`).once("value")
       ).val();
 
       commit("setUser", user);
@@ -111,12 +106,43 @@ export default {
       Cookies.remove("jwt-token");
       await firebase.auth().signOut();
     },
+    //замена аватара
+    async changeAvatar({ commit, getters }, imageFile) {
+      commit("CLEAR_ERROR");
+      commit("SET_LOADING", true);
+      console.log("isCurrentToken", getters.isCurrentToken);
+      try {
+        const userID = getters.isCurrentToken;
+
+        await firebase
+          .storage()
+          .ref(`usersAvatars/${userID}/${imageFile.name}`)
+          .put(imageFile);
+
+        const imageSrc = await firebase
+          .storage()
+          .ref(`usersAvatars/${userID}/${imageFile.name}`)
+          .getDownloadURL();
+
+        await firebase
+          .database()
+          .ref(`users/${userID}/info`)
+          .update({ avatar: imageSrc });
+
+        commit("changeImage", imageSrc);
+        commit("SET_LOADING", false);
+      } catch (error) {
+        commit("SET_ERROR", error);
+        commit("SET_LOADING", false);
+        console.log(error);
+      }
+    }
   },
   getters: {
     isAuthenticated: (state) => Boolean(state.token),
     isCurrentToken: (state) => state.token,
-    isCurrentUser: (state) => state.user,
-  },
+    isCurrentUser: (state) => state.user
+  }
 };
 
 function isJwtToken(token) {

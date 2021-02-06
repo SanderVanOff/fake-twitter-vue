@@ -3,8 +3,6 @@
     <div class="post-wrapper" v-if="isCurrentUser">
       <div class="post__avatar">
         <img :src="postData.userAvatar" alt="" class="post-avatar__img" />
-      </div>
-      <div class="post__main post-main">
         <div class="post-main__user mb-3">
           <span class="post-main__username mr-3">{{ postData.username }}</span>
           <span class="post-main__nickname mr-3">{{ postData.nickname }}</span>
@@ -13,12 +11,19 @@
             icon="x"
             class="post-delete"
             @click="removePost(postData)"
+            v-if="postData.nickname === isCurrentUser.nickname"
           ></b-icon>
         </div>
+      </div>
+      <div class="post__main post-main">
         <div class="post-main__text mb-3" v-html="postData.text"></div>
-        <div class="post-main__image mb-2">
-          <img :src="postData.image" alt="" class="post-main__img" style="width: 100%;
-  height: 100%;"/>
+        <div class="post-main__image mb-2" v-if="postData.image">
+          <img
+            :src="postData.image"
+            alt=""
+            class="post-main__img"
+            style="width: 100%; height: 100%"
+          />
         </div>
         <div class="post-main__bottom">
           <b-icon
@@ -49,8 +54,8 @@ export default {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
@@ -60,7 +65,7 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   },
   methods: {
     async removePost(postData) {
@@ -69,8 +74,8 @@ export default {
     async likesPost(id) {
       const currentNicknameUser = this.isCurrentUser.nickname;
       await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -80,8 +85,12 @@ export default {
   padding: 15px;
   border-top: 1px solid rgb(235, 238, 240);
 }
+.post-wrapper {
+  width: 100%;
+}
 .post__avatar {
-  margin-right: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .post-avatar__img {
@@ -98,6 +107,8 @@ export default {
   flex-direction: column;
 }
 .post-main__user {
+  width: 100%;
+  margin-left: 30px;
   position: relative;
 }
 .post-main__username {
