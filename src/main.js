@@ -10,8 +10,9 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
-//Toaster
-
+//Notifications
+import Notifications from 'vue-notification'
+Vue.use(Notifications);
 //firebase
 import firebase from "firebase/app";
 const firebaseOption = {

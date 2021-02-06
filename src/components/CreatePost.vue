@@ -124,6 +124,7 @@ export default {
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: rgba(0, 0, 0, 0.02) 0px 0px 2px inset;
+  object-fit: cover;
 }
 .create-post__text {
   outline: none;

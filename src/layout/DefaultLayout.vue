@@ -4,7 +4,7 @@
     <router-view></router-view>
     <overlay v-if="LOADING && !isCurrentUser" />
 
-    <b-modal id="modal-create-post" busy="true" size="lg" centered>
+    <b-modal id="modal-create-post" :busy="true" size="lg" centered>
       <create-post></create-post>
       <template #modal-footer class="d-none">
         <div class="w-100 d-none"></div>
@@ -19,6 +19,8 @@ import Overlay from "@/components/App/Overlay";
 import CreatePost from "@/components/CreatePost";
 
 import { mapGetters } from "vuex";
+
+
 
 export default {
   name: "default-layout",

@@ -36,6 +36,12 @@ const routes = [
     name: 'Registration',
     component: () => import('../views/auth/Registration.vue'),
     props: true,
+  },
+  {
+    path: '/*',
+    name: 'Error',
+    component: () => import('../views/Error.vue'),
+    props: true,
   }
 ]
 

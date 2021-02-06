@@ -33,6 +33,8 @@ export default {
       { commit, dispatch },
       { nickname, password, email, username, avatar }
     ) {
+      commit("CLEAR_ERROR");
+      commit("SET_LOADING", true);
       try {
         await firebase
           .auth()
@@ -44,10 +46,15 @@ export default {
               nickname,
               avatar
             });
+            dispatch("SET_USER", data.user.uid);
             dispatch("SET_TOKEN", data.user.uid);
+            commit("SET_LOADING", false);
+            commit("SET_MESSAGE", {text: "Вы успешно зарегистрированы"});
           });
       } catch (error) {
-        console.log(error);
+        commit("SET_LOADING", false);
+        commit("SET_ERROR", {code: error.code, message: error.message});
+        throw error;
       }
     },
     //логин
@@ -62,9 +69,10 @@ export default {
         dispatch("SET_USER", data.user.uid);
         dispatch("SET_TOKEN", data.user.uid);
         commit("SET_LOADING", false);
-        commit("SET_MESSAGE", "Вы успешно вошли");
+        commit("SET_MESSAGE", {text: "Вы успешно вошли"});
       } catch (error) {
-        commit("SET_ERROR", error);
+        commit("SET_LOADING", false);
+        commit("SET_ERROR", {code: error.code, message: error.message});
         throw error;
       }
     },
@@ -105,6 +113,7 @@ export default {
       commit("clearUser");
       Cookies.remove("jwt-token");
       await firebase.auth().signOut();
+      commit("SET_MESSAGE", {text: "Вы успешно вышли из Chatter"});
     },
     //замена аватара
     async changeAvatar({ commit, getters }, imageFile) {
@@ -132,7 +141,7 @@ export default {
         commit("changeImage", imageSrc);
         commit("SET_LOADING", false);
       } catch (error) {
-        commit("SET_ERROR", error);
+        commit("SET_ERROR", {code: error.code, message: error.message});
         commit("SET_LOADING", false);
         console.log(error);
       }

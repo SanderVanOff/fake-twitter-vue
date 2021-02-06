@@ -194,6 +194,7 @@ export default {
   cursor: pointer;
   width: 40px;
   height: 40px;
+  object-fit: cover;
 }
 .user__username {
   overflow-wrap: break-word;
