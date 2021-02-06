@@ -12,7 +12,6 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 //Toaster
 
-
 //firebase
 import firebase from "firebase/app";
 const firebaseOption = {
@@ -22,7 +21,7 @@ const firebaseOption = {
   storageBucket: "fake-twitter-8319b.appspot.com",
   messagingSenderId: "797485465036",
   appId: "1:797485465036:web:95c86298ce1482ee22b169",
-  measurementId: "G-DZWWLSJWBH",
+  measurementId: "G-DZWWLSJWBH"
 };
 
 // Make BootstrapVue available throughout your project
@@ -43,15 +42,15 @@ new Vue({
     let app = null;
     if (!firebase.apps.length) {
       app = firebase.initializeApp(firebaseOption);
-      firebase.auth().onAuthStateChanged(user => {
-        if(user){
-          this.$store.dispatch('AUTO_LOGIN')
-          this.$store.dispatch('SET_USER', user.uid)
-        } else {
-          this.$router.push('/login')
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.$store.dispatch("AUTO_LOGIN");
+          this.$store.dispatch("SET_USER", user.uid);
+        } else if (this.$route.path !== "/login") {
+          this.$router.push("/login");
         }
-      })
+      });
     }
   },
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount("#app");
