@@ -1,8 +1,10 @@
 <template>
   <div class="default-layout d-flex">
     <header-component></header-component>
-    <router-view></router-view>
-    <overlay v-if="LOADING && !isCurrentUser" />
+    <transition name="component-fade" mode="out-in">
+    <router-view></router-view>    
+    </transition>
+    <overlay v-if="LOADING || !isCurrentUser" />
 
     <b-modal id="modal-create-post" :busy="true" size="lg" centered>
       <create-post></create-post>
@@ -59,4 +61,6 @@ export default {
   justify-content: center;
   align-items: center;
 } */
+
+ 
 </style>

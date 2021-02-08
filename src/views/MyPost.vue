@@ -12,14 +12,17 @@
     </div>
     <div class="main-form"></div>
     <div class="main-line"></div>
-    <transition-group name="list-item">
-      <template v-if="getMyPosts.length">
-        <post v-for="post of getMyPosts" :key="post.id" :postData="post"></post>
-      </template>
-      <div v-else>
-        Постов пока нет
-      </div>
+    <template v-if="isCurrentUser">
+<transition-group name="list" tag="div">
+      <post v-for="post of getMyPosts" :key="post.id" :postData="post"></post>
     </transition-group>
+    </template>
+    <div class="d-flex justify-content-center loader" v-else>
+      <div class="spinner-border text-dark" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    
   </main>
 </template>
 
@@ -47,6 +50,11 @@ export default {
 </script>
 
 <style scoped>
+.loader {
+  height: 90vmin;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+}
 .main {
   max-width: 600px;
   width: 100%;
@@ -60,6 +68,7 @@ export default {
   padding: 10px 15px;
   border-bottom: 1px solid rgb(235, 238, 240);
   border-right: 1px solid rgb(235, 238, 240);
+  border-left: 1px solid rgb(235, 238, 240);
   width: 600px;
   background: #fff;
   position: fixed;

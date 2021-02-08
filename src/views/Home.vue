@@ -14,10 +14,8 @@
       <create-post></create-post>
     </div>
     <div class="main-line" v-if="isCurrentUser"></div>
-    <transition-group name="list-item">
-
-    <post v-for="post of ALL_POSTS" :key="post.id" :postData="post" ></post>
-
+      <transition-group name="list" tag="div">
+        <post v-for="post of ALL_POSTS" :key="post.id" :postData="post"></post>
     </transition-group>
   </main>
 </template>
@@ -33,11 +31,11 @@ export default {
   name: "Home",
   components: {
     CreatePost,
-    Post,
+    Post
   },
   computed: {
-    ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
-  },
+    ...mapGetters(["ALL_POSTS", "isCurrentUser"])
+  }
 };
 </script>
 
@@ -55,6 +53,7 @@ export default {
   padding: 10px 15px;
   border-bottom: 1px solid rgb(235, 238, 240);
   border-right: 1px solid rgb(235, 238, 240);
+  border-left: 1px solid rgb(235, 238, 240);
   width: 600px;
   background: #fff;
   position: fixed;
