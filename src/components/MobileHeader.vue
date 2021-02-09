@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="mobile-header">
     <div class="header__wrapper">
     <nav class="header__nav nav">
       <ul class="nav__list">
@@ -21,7 +21,7 @@
     </nav>
     <!--  -->
 
-    <b-dropdown variant="white" no-caret>
+    <b-dropdown variant="white" no-caret class="user-dropdown-btn">
       <template #button-content>
         <div class="header__user user user-dropdown">
           <img :src="currentUser.avatar" alt="" class="user__img" />
@@ -64,14 +64,6 @@ export default {
   data: () => ({
     avatar: null,
     links: [
-      {
-        name: "logo",
-        title: "Chatter",
-        // image:
-        //   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231da1f2' class='r-13gxpu9 r-4qtqp9 r-yyyyoo r-16y2uox r-1q142lx r-8kz0gk r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-1srniue'%3E%3Cg%3E%3Cpath d='M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E",
-        image: "/logo.png",
-        url: "/"
-      },
       {
         name: "home",
         title: "Главная",
@@ -128,22 +120,30 @@ export default {
 </script>
 
 <style scoped>
-.header {
-  height: 100vh;
-  position: relative;
+.mobile-header {
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
   
 }
 .header__wrapper {
   height: 100%;
-  position: fixed;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  padding: 15px 0;
+}
+.nav {
+    width: 100%;
 }
 .nav__link-img {
   display: inline-block;
   width: 30px;
+}
+.nav__list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 .nav__item {
   display: flex;
@@ -173,18 +173,20 @@ export default {
   background-color: rgb(29, 161, 242);
   box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 28px;
   outline-style: none;
-  min-height: 49px;
+  height: 49px;
   padding-left: 30px;
   padding-right: 30px;
   border-radius: 9999px;
-  width: 90%;
+  width: 49px;
   color: rgb(255, 255, 255);
   font-weight: 700;
   font-size: 15px;
   border-color: rgba(0, 0, 0, 0);
   transition: 0.2s ease-in-out;
   margin-top: 15px;
-  width: 100%;
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
 }
 
 .nav__button:hover {
@@ -196,6 +198,10 @@ export default {
 }
 .router-link-exact-active {
   color: rgb(26, 145, 218);
+}
+.user-dropdown-btn {
+    margin-left: 5%;
+    margin-right: 20px;
 }
 .header__user .dropdown-toggle {
   display: flex;

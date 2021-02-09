@@ -166,4 +166,6 @@ export default {
 .post-main__like:hover {
   transform: scale(1.2);
 }
+
+
 </style>

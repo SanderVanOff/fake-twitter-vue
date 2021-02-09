@@ -97,9 +97,6 @@ export default {
 #app {
   margin: 0 auto;
 }
-.content {
-  padding: 10px 0;
-}
 .list-item {
   display: inline-block;
   margin-right: 10px;

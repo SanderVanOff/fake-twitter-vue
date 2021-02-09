@@ -13,16 +13,15 @@
     <div class="main-form"></div>
     <div class="main-line"></div>
     <template v-if="isCurrentUser">
-<transition-group name="list" tag="div">
-      <post v-for="post of getMyPosts" :key="post.id" :postData="post"></post>
-    </transition-group>
+      <transition-group name="list" tag="div" class="posts">
+        <post v-for="post of getMyPosts" :key="post.id" :postData="post"></post>
+      </transition-group>
     </template>
     <div class="d-flex justify-content-center loader" v-else>
       <div class="spinner-border text-dark" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    
   </main>
 </template>
 
@@ -50,61 +49,4 @@ export default {
 </script>
 
 <style scoped>
-.loader {
-  height: 90vmin;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.2);
-}
-.main {
-  max-width: 600px;
-  width: 100%;
-  border: 1px solid rgb(235, 238, 240);
-  margin-left: 250px;
-}
-.main-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 15px;
-  border-bottom: 1px solid rgb(235, 238, 240);
-  border-right: 1px solid rgb(235, 238, 240);
-  border-left: 1px solid rgb(235, 238, 240);
-  width: 600px;
-  background: #fff;
-  position: fixed;
-  top: 0;
-  height: 60px;
-  z-index: 99;
-}
-.main-header__title {
-  color: rgb(15, 20, 25);
-  font-size: 19px;
-  font-weight: 800;
-  line-height: 1.3125;
-}
-.main-header__img {
-  width: 39px;
-  height: 39px;
-  padding: 10px;
-}
-.main-header__icon {
-  widows: 100%;
-  cursor: pointer;
-  border-radius: 9999px;
-  transition: 0.2s ease-in-out;
-  display: flex;
-  justify-content: center;
-}
-.main-header__icon:hover {
-  background-color: rgba(29, 161, 242, 0.1);
-}
-.main-form {
-  margin-top: 25px;
-  padding: 15px;
-  border-bottom: 1px solid rgb(235, 238, 240);
-}
-.main-line {
-  height: 10px;
-  background-color: rgb(247, 249, 250);
-}
 </style>
