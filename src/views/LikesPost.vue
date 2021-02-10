@@ -1,7 +1,12 @@
 <template>
   <main class="main">
     <div class="main-header">
-      <span class="main-header__title">Понравившиеся посты</span>
+      <back-to-top visibleoffset="-10">
+      <span class="main-header__title">Нравится</span>
+      </back-to-top>
+      <div class="main-header__logo">
+        <img src="/logo.png" class="main-header__logo-img" />
+      </div>  
       <div class="main-header__icon">
         <img
           class="main-header__img"
@@ -54,6 +59,8 @@ export default {
 </script>
 
 <style scoped>
-
+.main-form {
+  padding: 0;
+}
 
 </style>

@@ -14,6 +14,8 @@ require("bootstrap/dist/css/bootstrap.css");
 
 require("bootstrap-vue/dist/bootstrap-vue.css");
 
+var _vueBacktotop = _interopRequireDefault(require("vue-backtotop"));
+
 var _vueNotification = _interopRequireDefault(require("vue-notification"));
 
 var _app = _interopRequireDefault(require("firebase/app"));
@@ -26,7 +28,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 //Bootstrap
 // Import Bootstrap an BootstrapVue CSS files (order is important)
-//Notifications
+//vue-backtotop
+_vue["default"].use(_vueBacktotop["default"]); //Notifications
+
+
 _vue["default"].use(_vueNotification["default"]); //firebase
 
 

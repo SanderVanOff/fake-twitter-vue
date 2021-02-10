@@ -3,7 +3,7 @@
     <div class="post-wrapper" v-if="isCurrentUser">
       <div class="post__avatar">
         <img :src="postData.userAvatar" alt="" class="post-avatar__img" />
-        <div class="post-main__user mb-3">
+        <div class="post-main__user">
           <span class="post-main__username mr-3">{{ postData.username }}</span>
           <span class="post-main__nickname mr-3">{{ postData.nickname }}</span>
           <span class="post-main__date mr-3">{{ postData.postDate }}</span>
@@ -22,7 +22,7 @@
             :src="postData.image"
             alt=""
             class="post-main__img"
-            style="width: 100%; height: 100%"
+            style="width: 100%; height: auto; object-fit: cover"
           />
         </div>
         <div class="post-main__bottom">
@@ -91,6 +91,7 @@ export default {
 .post__avatar {
   display: flex;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .post-avatar__img {
@@ -110,6 +111,9 @@ export default {
   width: 100%;
   margin-left: 30px;
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .post-main__username {
   color: rgb(15, 20, 25);
@@ -143,6 +147,7 @@ export default {
   font-weight: 400;
   line-height: 1.3125;
   overflow-wrap: break-word;
+  margin-bottom: 15px;
 }
 .post-main__img {
   width: 100%;

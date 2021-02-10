@@ -1,7 +1,12 @@
 <template>
   <main class="main">
     <div class="main-header">
+      <back-to-top visibleoffset="-10">
       <span class="main-header__title">Главная</span>
+      </back-to-top>
+      <div class="main-header__logo">
+        <img src="/logo.png" class="main-header__logo-img" />
+      </div>
       <div class="main-header__icon">
         <img
           class="main-header__img"
@@ -23,6 +28,7 @@
 <script>
 import CreatePost from "@/components/CreatePost";
 import Post from "@/components/Post";
+import BackToTop from 'vue-backtotop'
 
 //
 import { mapGetters } from "vuex";
@@ -31,10 +37,20 @@ export default {
   name: "Home",
   components: {
     CreatePost,
-    Post
+    Post,
+    BackToTop
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"])
+  },
+  methods: {
+    backToUp(){
+      window.scroll({
+        to: 0,
+        left: 0,
+        behavior: 'smooth'
+      })
+    }
   }
 };
 </script>

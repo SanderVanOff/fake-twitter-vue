@@ -125,6 +125,7 @@ export default {
   bottom: 0;
   background: #fff;
   width: 100%;
+  display: none;
   
 }
 .header__wrapper {
@@ -296,8 +297,8 @@ export default {
   }
 }
 @media (max-width: 499px) {
-  .header {
-    display: none;
+  .mobile-header {
+    display: block;
   }
 }
 </style>

@@ -117,4 +117,12 @@ export default {
 /* .component-fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
+.vue-back-to-top {
+  display: block !important;
+  top: 0 !important;
+  left: 0 !important;
+  position: relative !important;
+}
+
+
 </style>

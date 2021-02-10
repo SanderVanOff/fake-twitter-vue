@@ -38,7 +38,12 @@
         class="create-post__add-input"
         @change="loadImageFile"
       />
-      <button class="create-post__create" @click="createNewPost">
+      <button 
+      class="create-post__create" 
+      @click="createNewPost" 
+      :disabled="post.text.length === 0"
+      >
+      <!-- :class="{disabled: post.text.length === 0}" -->
         Написать
       </button>
     </div>
@@ -106,6 +111,7 @@ export default {
         this.post.text = "";
         this.post.image = null;
         this.$refs.inputField.innerHTML = "Что происходит?";
+        this.$emit('close-modal');
       }
     },
   },
@@ -168,7 +174,7 @@ export default {
   width: 39px;
   height: 39px;
   transition: 0.2s ease-in-out;
-  margin-left: 50px;
+  margin-left: 10px;
   margin-top: 20px;
 }
 .create-post__add:hover {
@@ -197,5 +203,16 @@ export default {
 }
 .create-post__create:hover {
   background-color: rgb(26, 145, 218);
+}
+.create-post__create:disabled {
+  opacity: 0.5;
+}
+
+@media (max-width: 575px) {
+  .create-post__create {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 13px;
+}
 }
 </style>

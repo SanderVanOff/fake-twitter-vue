@@ -7,8 +7,8 @@
     <mobile-header-component></mobile-header-component>
     <overlay v-if="LOADING || !isCurrentUser" />
 
-    <b-modal id="modal-create-post" :busy="true" size="lg" centered>
-      <create-post></create-post>
+    <b-modal id="modal-create-post" :busy="true" size="lg" centered ref="createPostModal">
+      <create-post @close-modal="closeModal"></create-post>
       <template #modal-footer class="d-none">
         <div class="w-100 d-none"></div>
       </template>
@@ -48,6 +48,9 @@ export default {
         autoHideDelay: 5000,
         appendToast: append
       });
+    },
+    closeModal(){
+      this.$refs.createPostModal.hide()
     }
   },
   created() {

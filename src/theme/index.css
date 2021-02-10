@@ -142,6 +142,18 @@ button, button:focus {
   height: 10px;
   background-color: rgb(247, 249, 250);
 }
+
+.main-header__logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.main-header__logo-img {
+  display: none;
+  width: 40px;
+  height: auto;
+}
+
 @media (max-width: 499px) {
   .main {
     width: 100vw;
@@ -150,5 +162,10 @@ button, button:focus {
     margin-bottom: 60px;
   }
 
+  .main-header__logo-img {
+    display: block;
+  }
+
 
 }
+
