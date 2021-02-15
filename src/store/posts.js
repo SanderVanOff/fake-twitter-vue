@@ -115,6 +115,18 @@ export default {
         await commit("ADD_LIKE_POST", { id, currentNicknameUser });
       }
       await firebase.database().ref(`posts/${id}/likes`).set(changePost.likes);
+    },
+    //добавление комментария
+    async getNewComment({commit, getters}, comment){
+      const postForComment = getters["ALL_POSTS"].find((post) => post.id === comment.postId);
+
+      if(!postForComment.comments) {
+        postForComment.comments = [];
+      }
+      postForComment.comments.push(comment);
+
+      await firebase.database().ref(`posts/${comment.postId}/comments`).set(postForComment.comments)
+
     }
   },
   getters: {

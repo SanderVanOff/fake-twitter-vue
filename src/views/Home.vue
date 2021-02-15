@@ -20,7 +20,11 @@
     </div>
     <div class="main-line" v-if="isCurrentUser"></div>
       <transition-group name="list" tag="div" class="posts">
-        <post v-for="post of ALL_POSTS" :key="post.id" :postData="post"></post>
+        <post v-for="post of ALL_POSTS" 
+        :key="post.id" 
+        :postData="post"
+        @create-new-comment="createNewComment"
+        ></post>
     </transition-group>
   </main>
 </template>
@@ -50,6 +54,9 @@ export default {
         left: 0,
         behavior: 'smooth'
       })
+    },
+    createNewComment(){
+      
     }
   }
 };

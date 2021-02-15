@@ -27,6 +27,14 @@
         </div>
         <div class="post-main__bottom">
           <b-icon
+            icon="chat"
+            class="post-main__chat mr-2"
+            @click="createComment(postData.id)"
+          ></b-icon>
+          <span class="post-main__chat mr-5">{{
+            countComment = postData.comments ? postData.comments.length : 0
+          }}</span>
+          <b-icon
             :icon="likesPostCurrentUser ? 'heart-fill' : 'heart'"
             :class="{ active: likesPostCurrentUser }"
             class="post-main__like"
@@ -35,6 +43,11 @@
           <span class="post-main__like-count ml-2">{{
             postData.likes.length - 1
           }}</span>
+        </div>
+        <div class="post-main__answer mt-3">
+          <create-post-answer
+            @create-new-comment="createNewComment"
+          ></create-post-answer>
         </div>
       </div>
     </div>
@@ -47,6 +60,8 @@
 </template>
 
 <script>
+import CreatePostAnswer from "@/components/CreatePostAnswer";
+
 import { mapGetters } from "vuex";
 export default {
   props: {
@@ -54,8 +69,11 @@ export default {
       type: Object,
       default() {
         return {};
-      },
-    },
+      }
+    }
+  },
+  components: {
+    CreatePostAnswer
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
@@ -75,7 +93,29 @@ export default {
       const currentNicknameUser = this.isCurrentUser.nickname;
       await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
     },
-  },
+    async createNewComment(data) {
+      console.log('id', this.postData.id)
+        const option = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        };
+
+        const comment = {
+          id: Date.now().toString(32),
+          username: this.isCurrentUser.username,
+          nickname: this.isCurrentUser.nickname,
+          userAvatar: this.isCurrentUser.avatar,
+          postId: this.postData.id,
+          text: data,
+          postDate: new Date().toLocaleString("ru-RU", option),
+        };
+
+        await this.$store.dispatch("getNewComment", comment);
+    }
+  }
 };
 </script>
 
@@ -160,7 +200,8 @@ export default {
   align-items: center;
   justify-content: flex-end;
 }
-.post-main__like {
+.post-main__like,
+.post-main__chat {
   transform: scale(1);
   cursor: pointer;
   transition: 0.2s ease-in-out;
@@ -171,6 +212,4 @@ export default {
 .post-main__like:hover {
   transform: scale(1.2);
 }
-
-
 </style>

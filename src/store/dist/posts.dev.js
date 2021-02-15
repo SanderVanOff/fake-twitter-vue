@@ -236,6 +236,33 @@ var _default = {
           }
         }
       });
+    },
+    //добавление комментария
+    getNewComment: function getNewComment(_ref9, comment) {
+      var commit, getters, postForComment;
+      return regeneratorRuntime.async(function getNewComment$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref9.commit, getters = _ref9.getters;
+              postForComment = getters["ALL_POSTS"].find(function (post) {
+                return post.id === comment.postId;
+              });
+
+              if (!postForComment.comments) {
+                postForComment.comments = [];
+              }
+
+              postForComment.comments.push(comment);
+              _context5.next = 6;
+              return regeneratorRuntime.awrap(_app["default"].database().ref("posts/".concat(comment.postId, "/comments")).set(postForComment.comments));
+
+            case 6:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      });
     }
   },
   getters: {
