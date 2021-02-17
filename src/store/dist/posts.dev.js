@@ -46,6 +46,12 @@ var _default = {
       });
       var indexLike = post.likes.indexOf(currentNicknameUser);
       post.likes.splice(indexLike, 1);
+    },
+    DELETE__COMMENT: function DELETE__COMMENT(state, post) {
+      var updatePost = state.posts.find(function (item) {
+        return item.id === post.id;
+      });
+      updatePost.comments = post.comments;
     }
   },
   actions: {
@@ -239,30 +245,87 @@ var _default = {
     },
     //добавление комментария
     getNewComment: function getNewComment(_ref9, comment) {
-      var commit, getters, postForComment;
+      var commit, getters, dispatch, post;
       return regeneratorRuntime.async(function getNewComment$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              commit = _ref9.commit, getters = _ref9.getters;
-              postForComment = getters["ALL_POSTS"].find(function (post) {
+              commit = _ref9.commit, getters = _ref9.getters, dispatch = _ref9.dispatch;
+              commit("CLEAR_ERROR");
+              commit("SET_LOADING", true);
+              _context5.prev = 3;
+              post = getters["ALL_POSTS"].find(function (post) {
                 return post.id === comment.postId;
               });
 
-              if (!postForComment.comments) {
-                postForComment.comments = [];
+              if (!post.comments) {
+                post.comments = [];
               }
 
-              postForComment.comments.push(comment);
-              _context5.next = 6;
-              return regeneratorRuntime.awrap(_app["default"].database().ref("posts/".concat(comment.postId, "/comments")).set(postForComment.comments));
+              post.comments.push(comment);
+              dispatch('fetchAllPosts');
+              _context5.next = 10;
+              return regeneratorRuntime.awrap(_app["default"].database().ref("posts/".concat(comment.postId, "/comments")).set(post.comments));
 
-            case 6:
+            case 10:
+              commit("SET_LOADING", false);
+              _context5.next = 19;
+              break;
+
+            case 13:
+              _context5.prev = 13;
+              _context5.t0 = _context5["catch"](3);
+              commit("SET_LOADING", false);
+              console.log(_context5.t0);
+              commit("SET_ERROR", _context5.t0);
+              throw _context5.t0;
+
+            case 19:
             case "end":
               return _context5.stop();
           }
         }
-      });
+      }, null, null, [[3, 13]]);
+    },
+    //удаление комментария
+    deleteComment: function deleteComment(_ref10, comment) {
+      var commit, getters, post;
+      return regeneratorRuntime.async(function deleteComment$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              commit = _ref10.commit, getters = _ref10.getters;
+              commit("CLEAR_ERROR");
+              commit("SET_LOADING", true);
+              _context6.prev = 3;
+              post = getters["ALL_POSTS"].find(function (post) {
+                return post.id === comment.postId;
+              });
+              post.comments = post.comments.filter(function (item) {
+                return item.id !== comment.id;
+              });
+              _context6.next = 8;
+              return regeneratorRuntime.awrap(_app["default"].database().ref("posts/".concat(comment.postId, "/comments")).set(post.comments));
+
+            case 8:
+              commit('DELETE__COMMENT', post);
+              commit("SET_LOADING", false);
+              _context6.next = 17;
+              break;
+
+            case 12:
+              _context6.prev = 12;
+              _context6.t0 = _context6["catch"](3);
+              commit("SET_LOADING", false);
+              commit("SET_ERROR", _context6.t0);
+              throw _context6.t0;
+
+            case 17:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, null, null, [[3, 12]]);
     }
   },
   getters: {

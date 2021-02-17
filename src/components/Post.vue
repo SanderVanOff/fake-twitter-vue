@@ -29,10 +29,10 @@
           <b-icon
             icon="chat"
             class="post-main__chat mr-2"
-            @click="createComment(postData.id)"
+            @click="openComment(postData.id)"
           ></b-icon>
           <span class="post-main__chat mr-5">{{
-            countComment = postData.comments ? postData.comments.length : 0
+            countComment = commentItem ? commentItem.length : 0
           }}</span>
           <b-icon
             :icon="likesPostCurrentUser ? 'heart-fill' : 'heart'"
@@ -45,8 +45,16 @@
           }}</span>
         </div>
         <div class="post-main__answer mt-3">
+          <transition-group name="list">
+          <comment
+          v-for="comment of commentItem"
+          :commentData="comment"
+          :key="comment.id"
+          @remove-comment="removeComment"
+          ></comment>
+          </transition-group>
           <create-post-answer
-            @create-new-comment="createNewComment"
+            :postData="postData"
           ></create-post-answer>
         </div>
       </div>
@@ -61,6 +69,7 @@
 
 <script>
 import CreatePostAnswer from "@/components/CreatePostAnswer";
+import Comment from "@/components/Comment";
 
 import { mapGetters } from "vuex";
 export default {
@@ -73,7 +82,8 @@ export default {
     }
   },
   components: {
-    CreatePostAnswer
+    CreatePostAnswer,
+    Comment
   },
   computed: {
     ...mapGetters(["ALL_POSTS", "isCurrentUser"]),
@@ -84,6 +94,9 @@ export default {
         return false;
       }
     },
+    commentItem(){
+      return (this.ALL_POSTS.find(post => post.id === this.postData.id)).comments;
+    }
   },
   methods: {
     async removePost(postData) {
@@ -93,27 +106,11 @@ export default {
       const currentNicknameUser = this.isCurrentUser.nickname;
       await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
     },
-    async createNewComment(data) {
-      console.log('id', this.postData.id)
-        const option = {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        };
-
-        const comment = {
-          id: Date.now().toString(32),
-          username: this.isCurrentUser.username,
-          nickname: this.isCurrentUser.nickname,
-          userAvatar: this.isCurrentUser.avatar,
-          postId: this.postData.id,
-          text: data,
-          postDate: new Date().toLocaleString("ru-RU", option),
-        };
-
-        await this.$store.dispatch("getNewComment", comment);
+    openComment(id){
+      console.log(id)
+    },
+    async removeComment(comment){
+      await this.$store.dispatch('deleteComment', comment);
     }
   }
 };

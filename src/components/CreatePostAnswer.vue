@@ -1,13 +1,21 @@
 <template>
-  <div class="comment">
     <div class="comment__create">
       <img :src="isCurrentUser.avatar" alt="" class="comment__avatar" />
-      <div
+      <!-- <div
         class="comment__text ml-3"
         contenteditable
         ref="inputField"
         @input="addTextToData"
-      ></div>
+        @keyup.enter.exact="createNewComment"
+      ></div> -->
+      <textarea 
+      class="comment__text ml-3" 
+      rows="1"
+      v-model="comment.text"
+      ref="inputField"
+      @input="rowsTextarea($event)"
+      @keypress.enter.exact="createNewComment"
+      ></textarea>
       <button
         class="comment__btn"
         :disabled="comment.text.length === 0"
@@ -16,33 +24,67 @@
         <b-icon icon="check-all" class="comment__btn-icon"></b-icon>
       </button>
     </div>
-  </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 export default {
+  props: {
+    postData: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
   data: () => ({
+    test: "",
     comment: {
-      text: ""
+      text: "",
+      rows: 1
     }
   }),
   computed: {
-    ...mapGetters(["isCurrentUser"])
+    ...mapGetters(["isCurrentUser"]),
+    
   },
   methods: {
     addTextToData() {
       this.comment.text = this.$refs.inputField.innerHTML;
     },
-    createNewComment() {
-      if (this.comment.text.length > 0) {
-        const newComment = this.comment.text;
-        this.$emit("create-new-comment", newComment);
+    rowsTextarea(event){
+      this.$refs.inputField.style.height = '38px';
+      this.$refs.inputField.style.height = `${event.target.scrollHeight + 2}px`
+    },
+    async createNewComment() {
+
+      if ((this.comment.text.trim()).length) {
+
+        const option = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        };
+
+        const comment = {
+          id: Date.now().toString(32),
+          username: this.isCurrentUser.username,
+          nickname: this.isCurrentUser.nickname,
+          userAvatar: this.isCurrentUser.avatar,
+          postId: this.postData.id,
+          text: this.comment.text,
+          postDate: new Date().toLocaleString("ru-RU", option),
+        };
+
+        await this.$store.dispatch("getNewComment", comment);
+        console.dir(this.$refs.inputField)
         this.comment.text = '';
-        this.$refs.inputField.innerHTML = ''
+        this.$refs.inputField.style.height = '40px'
       }
-    }
+    },
   }
 };
 </script>
@@ -110,10 +152,11 @@ export default {
   outline: none;
   user-select: text;
   overflow-wrap: break-word;
-  font-size: 19px;
+  font-size: 14px;
   font-weight: 400;
   color: rgb(15, 20, 25);
   line-height: 1.3125;
+  resize: none;
 }
 
 .comment__btn {

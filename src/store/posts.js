@@ -29,6 +29,10 @@ export default {
       const post = state.posts.find((item) => item.id === id);
       const indexLike = post.likes.indexOf(currentNicknameUser);
       post.likes.splice(indexLike, 1);
+    },
+    DELETE__COMMENT(state, post){
+      const updatePost = state.posts.find(item => item.id === post.id);
+      updatePost.comments = post.comments;
     }
   },
   actions: {
@@ -117,16 +121,51 @@ export default {
       await firebase.database().ref(`posts/${id}/likes`).set(changePost.likes);
     },
     //добавление комментария
-    async getNewComment({commit, getters}, comment){
-      const postForComment = getters["ALL_POSTS"].find((post) => post.id === comment.postId);
+     async getNewComment({commit, getters, dispatch}, comment){
+      commit("CLEAR_ERROR");
+      commit("SET_LOADING", true);
+      try {
+        const post = getters["ALL_POSTS"].find((post) => post.id === comment.postId);
+        if(!post.comments) {
+          post.comments = [];
+        }
+        post.comments.push(comment)
+        
+        dispatch('fetchAllPosts')
+        
+        await firebase.database().ref(`posts/${comment.postId}/comments`).set(post.comments);
+        commit("SET_LOADING", false);
 
-      if(!postForComment.comments) {
-        postForComment.comments = [];
+      }catch(err){
+
+        commit("SET_LOADING", false);
+        console.log(err);
+        commit("SET_ERROR", err);
+        throw err;
       }
-      postForComment.comments.push(comment);
+    },
+    //удаление комментария
+    async deleteComment({commit, getters}, comment){
+      commit("CLEAR_ERROR");
+      commit("SET_LOADING", true);
 
-      await firebase.database().ref(`posts/${comment.postId}/comments`).set(postForComment.comments)
+      try{
 
+        let post = getters["ALL_POSTS"].find((post) => post.id === comment.postId);
+        post.comments = post.comments.filter(item => item.id !== comment.id);
+
+        await firebase.database().ref(`posts/${comment.postId}/comments`).set(post.comments);
+        
+        commit('DELETE__COMMENT', post)
+        commit("SET_LOADING", false);
+
+      }catch(err){
+        commit("SET_LOADING", false);
+        commit("SET_ERROR", err);
+        throw err;
+      }
+      
+      
     }
   },
   getters: {
