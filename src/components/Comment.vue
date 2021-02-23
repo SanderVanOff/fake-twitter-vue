@@ -15,7 +15,7 @@
         ></b-icon>
         </div>
         <!-- <p class="comment__text" v-html="commentData.text"></p> -->
-        <pre class="comment__text">{{commentData.text}}</pre>
+        <div class="comment__text" v-html="commentData.text"></div>
       </div>
     </div>
   </div>

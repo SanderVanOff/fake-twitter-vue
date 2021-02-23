@@ -52,6 +52,7 @@
         </div>
       </div>
       <b-dropdown-item @click="loadImage">Изменить аватар</b-dropdown-item>
+      <b-dropdown-item><router-link :to="{name: 'about'}">О приложении</router-link></b-dropdown-item>
       <b-dropdown-item @click="logout">Выход</b-dropdown-item>
     </b-dropdown>
     </div>

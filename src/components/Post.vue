@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="post__main post-main">
-        <pre class="post-main__text mb-3" v-html="postData.text"></pre>
+        <div class="post-main__text mb-3" v-html="postData.text"></div>
         <div class="post-main__image mb-2" v-if="postData.image">
           <img
             :src="postData.image"
