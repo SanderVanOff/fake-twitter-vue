@@ -19,6 +19,7 @@
       <create-post></create-post>
     </div>
     <div class="main-line" v-if="isCurrentUser"></div>
+    <template v-if="isCurrentUser && ALL_POSTS.length">
       <transition-group name="list" tag="div" class="posts">
         <post v-for="post of ALL_POSTS" 
         :key="post.id" 
@@ -26,6 +27,10 @@
         @create-new-comment="createNewComment"
         ></post>
     </transition-group>
+    </template>
+    <div class="d-flex justify-content-center align-items-center no-post" v-else>
+      Постов пока нет
+    </div>
   </main>
 </template>
 
@@ -63,5 +68,7 @@ export default {
 </script>
 
 <style scoped>
-
+.no-post {
+  height: 80%;
+}
 </style>

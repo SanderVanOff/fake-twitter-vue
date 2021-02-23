@@ -29,7 +29,7 @@
           <b-icon
             icon="chat"
             class="post-main__chat mr-2"
-            v-b-toggle.collapse-1
+            v-b-toggle="`${collapseID}`"
           ></b-icon>
           <span class="post-main__chat mr-5">{{
             countComment = commentItem ? commentItem.length : 0
@@ -44,7 +44,7 @@
             postData.likes.length - 1
           }}</span>
         </div>
-        <b-collapse id="collapse-1">
+        <b-collapse :id="collapseID">
         <div class="post-main__answer mt-3">
           <transition-group name="list">
           <comment
@@ -83,6 +83,9 @@ export default {
       }
     }
   },
+  data: ()=> ({
+    collapseID: ""
+  }),
   components: {
     CreateComment,
     Comment
@@ -111,7 +114,10 @@ export default {
     async removeComment(comment){
       await this.$store.dispatch('deleteComment', comment);
     }
-  }
+  },
+  mounted() {
+    this.collapseID = this.postData.id
+  },
 };
 </script>
 

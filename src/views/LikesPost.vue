@@ -17,7 +17,7 @@
     </div>
     <div class="main-form"></div>
     <div class="main-line"></div>
-    <template v-if="isCurrentUser">
+    <template v-if="isCurrentUser && this.getLikesPosts.length">
     <transition-group name="list" tag="div" class="posts">
     <post
       v-for="post of getLikesPosts"
@@ -26,10 +26,9 @@
     ></post>
     </transition-group>
     </template>
-    <div class="d-flex justify-content-center loader" v-else>
-      <div class="spinner-border text-dark" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+    <div class="d-flex justify-content-center align-items-center no-post" v-else>
+      Постов пока нет
+    </div>
     </div>
   </main>
 </template>
@@ -61,6 +60,9 @@ export default {
 <style scoped>
 .main-form {
   padding: 0;
+}
+.no-post {
+  height: 80%;
 }
 
 </style>
