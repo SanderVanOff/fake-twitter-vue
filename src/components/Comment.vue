@@ -55,7 +55,7 @@ export default {
 .comment__wrapper {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
 .comment__avatar {

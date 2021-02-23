@@ -1,13 +1,6 @@
 <template>
     <div class="comment__create">
       <img :src="isCurrentUser.avatar" alt="" class="comment__avatar" />
-      <!-- <div
-        class="comment__text ml-3"
-        contenteditable
-        ref="inputField"
-        @input="addTextToData"
-        @keyup.enter.exact="createNewComment"
-      ></div> -->
       <textarea 
       class="comment__text ml-3" 
       rows="1"
@@ -18,7 +11,7 @@
       ></textarea>
       <button
         class="comment__btn"
-        :disabled="comment.text.length === 0"
+        :disabled="comment.text.trim().length === 0"
         @click="createNewComment"
       >
         <b-icon icon="check-all" class="comment__btn-icon"></b-icon>
@@ -50,9 +43,9 @@ export default {
     
   },
   methods: {
-    addTextToData() {
-      this.comment.text = this.$refs.inputField.innerHTML;
-    },
+    // addTextToData() {
+    //   this.comment.text = this.$refs.inputField.innerHTML;
+    // },
     rowsTextarea(event){
       this.$refs.inputField.style.height = '38px';
       this.$refs.inputField.style.height = `${event.target.scrollHeight + 2}px`

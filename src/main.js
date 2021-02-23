@@ -12,7 +12,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 //vue-backtotop
 import BackToTop from 'vue-backtotop'
- 
+
 Vue.use(BackToTop)
 
 //Notifications
@@ -38,6 +38,7 @@ Vue.use(IconsPlugin);
 //styles
 import "normalize.css";
 import "./theme/index.css";
+import './registerServiceWorker'
 
 Vue.config.productionTip = false;
 

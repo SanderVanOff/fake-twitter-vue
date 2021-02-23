@@ -4,7 +4,7 @@
       <div class="create-post__avatar">
         <img :src="currentUserAvatar" alt="" class="create-post__avatar-img" />
       </div>
-      <div
+      <!-- <div
         class="create-post__text ml-3"
         contenteditable
         ref="inputField"
@@ -12,7 +12,16 @@
         @keydown.once="clearPlaceholder"
       >
         Что происходит?
-      </div>
+      </div> -->
+      <textarea 
+      class="create-post__text ml-3"
+      ref="inputField"
+      placeholder="Есть чем поделиться?"
+      rows="1"
+      v-model="post.text"
+      @input="rowsTextarea($event)"
+      @keypress.enter.exact="createNewPost"
+      ></textarea>
     </div>
     <div class="create-post__image" v-show="post.image">
       <b-icon
@@ -73,11 +82,13 @@ export default {
   },
 
   methods: {
-    clearPlaceholder() {
-      this.$refs.inputField.textContent = " ";
-    },
-    addTextToData() {
-      this.post.text = this.$refs.inputField.innerHTML;
+
+    // addTextToData() {
+    //   this.post.text = this.$refs.inputField.innerHTML;
+    // },
+    rowsTextarea(event){
+      this.$refs.inputField.style.height = '38px';
+      this.$refs.inputField.style.height = `${event.target.scrollHeight + 2}px`
     },
     loadImage() {
       this.$refs.inputImgFile.click();
@@ -141,6 +152,8 @@ export default {
   color: rgb(15, 20, 25);
   line-height: 1.3125;
   width: 100%;
+  resize: none;
+  border: none;
 }
 .create-post__image {
   position: relative;

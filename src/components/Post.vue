@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="post__main post-main">
-        <div class="post-main__text mb-3" v-html="postData.text"></div>
+        <pre class="post-main__text mb-3" v-html="postData.text"></pre>
         <div class="post-main__image mb-2" v-if="postData.image">
           <img
             :src="postData.image"
@@ -29,7 +29,7 @@
           <b-icon
             icon="chat"
             class="post-main__chat mr-2"
-            @click="openComment(postData.id)"
+            v-b-toggle.collapse-1
           ></b-icon>
           <span class="post-main__chat mr-5">{{
             countComment = commentItem ? commentItem.length : 0
@@ -44,6 +44,7 @@
             postData.likes.length - 1
           }}</span>
         </div>
+        <b-collapse id="collapse-1">
         <div class="post-main__answer mt-3">
           <transition-group name="list">
           <comment
@@ -53,10 +54,11 @@
           @remove-comment="removeComment"
           ></comment>
           </transition-group>
-          <create-post-answer
+          <create-comment
             :postData="postData"
-          ></create-post-answer>
+          ></create-comment>
         </div>
+        </b-collapse>
       </div>
     </div>
     <div class="d-flex justify-content-center" v-else>
@@ -68,7 +70,7 @@
 </template>
 
 <script>
-import CreatePostAnswer from "@/components/CreatePostAnswer";
+import CreateComment from "@/components/CreateComment";
 import Comment from "@/components/Comment";
 
 import { mapGetters } from "vuex";
@@ -82,7 +84,7 @@ export default {
     }
   },
   components: {
-    CreatePostAnswer,
+    CreateComment,
     Comment
   },
   computed: {
@@ -105,9 +107,6 @@ export default {
     async likesPost(id) {
       const currentNicknameUser = this.isCurrentUser.nickname;
       await this.$store.dispatch("LikesPost", { id, currentNicknameUser });
-    },
-    openComment(id){
-      console.log(id)
     },
     async removeComment(comment){
       await this.$store.dispatch('deleteComment', comment);
@@ -202,6 +201,7 @@ export default {
   transform: scale(1);
   cursor: pointer;
   transition: 0.2s ease-in-out;
+  outline: none;
 }
 .post-main__like.active {
   color: #dc3545;
