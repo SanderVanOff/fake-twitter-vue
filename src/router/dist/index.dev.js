@@ -74,6 +74,15 @@ var routes = [{
   },
   props: true
 }, {
+  path: '/about',
+  name: 'about',
+  component: function component() {
+    return Promise.resolve().then(function () {
+      return _interopRequireWildcard(require('../views/About.vue'));
+    });
+  },
+  props: true
+}, {
   path: '/*',
   name: 'Error',
   component: function component() {

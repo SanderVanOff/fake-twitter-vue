@@ -38,6 +38,12 @@ const routes = [
     props: true,
   },
   {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/About.vue'),
+    props: true,
+  },
+  {
     path: '/*',
     name: 'Error',
     component: () => import('../views/Error.vue'),

@@ -29,7 +29,6 @@
     <div class="d-flex justify-content-center align-items-center no-post" v-else>
       Постов пока нет
     </div>
-    </div>
   </main>
 </template>
 
