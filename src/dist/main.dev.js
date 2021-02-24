@@ -24,6 +24,8 @@ require("normalize.css");
 
 require("./theme/index.css");
 
+require("./registerServiceWorker");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 //Bootstrap

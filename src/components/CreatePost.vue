@@ -4,15 +4,6 @@
       <div class="create-post__avatar">
         <img :src="currentUserAvatar" alt="" class="create-post__avatar-img" />
       </div>
-      <!-- <div
-        class="create-post__text ml-3"
-        contenteditable
-        ref="inputField"
-        @input="addTextToData"
-        @keydown.once="clearPlaceholder"
-      >
-        Что происходит?
-      </div> -->
       <textarea 
       class="create-post__text ml-3"
       ref="inputField"
@@ -20,7 +11,7 @@
       rows="1"
       v-model="post.text"
       @input="rowsTextarea($event)"
-      @keypress.enter.exact="createNewPost"
+      @keypress.enter.ctrl.exact="createNewPost"
       ></textarea>
     </div>
     <div class="create-post__image" v-show="post.image">

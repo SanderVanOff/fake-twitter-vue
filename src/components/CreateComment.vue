@@ -7,7 +7,7 @@
       v-model="comment.text"
       ref="inputField"
       @input="rowsTextarea($event)"
-      @keypress.enter.exact="createNewComment"
+      @keypress.enter.ctrl.exact="createNewComment"
       ></textarea>
       <button
         class="comment__btn"
