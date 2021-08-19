@@ -1,25 +1,28 @@
-# twitter-vue
+**мини-аналог Twitter - Chatter**
+  
+  
+  **Автор**: Собственный проект SPA.
+  
+  **Цель**: Тренировка. Отработка навыков.
+  
+  **Технологии**: HTML, CSS, JS, VUE
+  
+  
+  **Описание**: При работе с проектом было реализовано:
+  
+  - верстка страниц SPA;
+  - адаптация SPA под разные мониторы, планшеты, мобильные телефоны;
+  - регистрация и авторизация при помощи Firebase;
+  - получение/добавление/удаление записей в DataBase Firebase;
+  - фильтрация записей по собственным и понравившимся;
+  - загрузка изображение в Stogare, создание URL и запись в БД;
+  - возможность комментировать записи и добавлять/удалять в избранное;
+  - деплой на Firebase;
+  - код добавлен на GitHub
 
-## Project setup
-```
-npm install
-```
+Ссылка: https://fake-twitter-8319b.web.app/
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![YR3shl2tzH0MSA2F](https://user-images.githubusercontent.com/61217980/130015017-f9abbd49-2b91-4e1f-990c-140151998535.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# fake-twitter-vue
